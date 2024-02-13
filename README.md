@@ -1,31 +1,15 @@
-# RSSchool NodeJS websocket task template
-> Static http server and base task packages. 
-> By default WebSocket client tries to connect to the 3000 port.
+# 🚀 Welcome to your new awesome project!
 
-## Installation
-1. Clone/download repo
-2. `npm install`
+This project has been created using **webpack-cli**, you can now run
 
-## Usage
-**Development**
+```
+npm run build
+```
 
-`npm run start:dev`
+or
 
-* App served @ `http://localhost:8181` with nodemon
+```
+yarn build
+```
 
-**Production**
-
-`npm run start`
-
-* App served @ `http://localhost:8181` without nodemon
-
----
-
-**All commands**
-
-Command | Description
---- | ---
-`npm run start:dev` | App served @ `http://localhost:8181` with nodemon
-`npm run start` | App served @ `http://localhost:8181` without nodemon
-
-**Note**: replace `npm` with `yarn` in `package.json` if you use yarn.
+to bundle your application
