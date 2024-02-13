@@ -1,14 +1,17 @@
 import { httpServer } from "./http_server/index";
 import { WebSocketServer } from "ws";
+import db from "./db";
 import {
   IRequestLogin,
   IRequestLoginData,
   IResponseLogin,
   IResponseLoginData,
 } from "./types";
-import db from "./db";
+import * as dotenv from "dotenv";
 
-const HTTP_PORT = 8181;
+dotenv.config();
+
+const HTTP_PORT = process.env.PORT;
 
 const wss = new WebSocketServer({ port: 3000 });
 
