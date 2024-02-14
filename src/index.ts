@@ -7,6 +7,7 @@ import createGame from "./utils/createGame";
 import loginUser from "./utils/loginUser";
 import updateRoom from "./utils/updateRoom";
 import setDataToAllClients from "./utils/setDataToAllClients";
+import startGame from "./utils/startGame";
 
 dotenv.config();
 
@@ -37,8 +38,6 @@ wss.on("connection", function connection(ws) {
         case "create_room":
           const responseLoginUser = updateRoom(data);
 
-          console.log(users.length > 1);
-
           if (users.length > 1) {
             setDataToAllClients(responseLoginUser);
           } else {
@@ -61,7 +60,9 @@ wss.on("connection", function connection(ws) {
 
           shipsPosition.push(singleUserShips);
 
-          console.log(shipsPosition);
+          if (shipsPosition.length === 2) {
+            startGame();
+          }
 
           break;
         default:

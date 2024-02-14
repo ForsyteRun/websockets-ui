@@ -46,3 +46,8 @@ export interface IAddShips {
   data: string;
   id: number;
 }
+export interface IStartGame {
+  type: "start_game";
+  data: string;
+  id: number;
+}
