@@ -1,16 +1,12 @@
 import * as dotenv from "dotenv";
 import { WebSocketServer } from "ws";
-import createGame from "./utils/createGame";
-import { clients, users } from "./db";
+import { clients, shipsPosition, users } from "./db";
 import { httpServer } from "./http_server/index";
-import {
-  IRequestLogin,
-  IRequestLoginData,
-  IResponseLogin,
-  IResponseLoginData,
-} from "./types";
-import updateRoom from "./utils/updateRoom";
+import { IAddShips, IResponseLoginData } from "./types";
+import createGame from "./utils/createGame";
 import loginUser from "./utils/loginUser";
+import updateRoom from "./utils/updateRoom";
+import setDataToAllClients from "./utils/setDataToAllClients";
 
 dotenv.config();
 
@@ -32,13 +28,40 @@ wss.on("connection", function connection(ws) {
           const user = loginUser(data);
 
           ws.send(user);
+
+          // const responseLogin = updateRoom(data);
+
+          // ws.send(responseLogin);
+
           break;
         case "create_room":
-          updateRoom(data);
+          const responseLoginUser = updateRoom(data);
+
+          console.log(users.length > 1);
+
+          if (users.length > 1) {
+            setDataToAllClients(responseLoginUser);
+          } else {
+            ws.send(responseLoginUser);
+          }
+
           break;
         case "add_user_to_room":
-          updateRoom(data);
+          const responseCreateRoomData = updateRoom(data);
+
+          setDataToAllClients(responseCreateRoomData);
+
           createGame(data);
+
+          break;
+        case "add_ships":
+          let ships: IAddShips = JSON.parse(data.toString());
+
+          const singleUserShips = { ...ships, id: shipsPosition.length };
+
+          shipsPosition.push(singleUserShips);
+
+          console.log(shipsPosition);
 
           break;
         default:

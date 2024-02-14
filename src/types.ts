@@ -41,3 +41,8 @@ export interface ICreateGame {
   data: string;
   id: number;
 }
+export interface IAddShips {
+  type: "add_ships";
+  data: string;
+  id: number;
+}

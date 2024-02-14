@@ -2,7 +2,7 @@ import { users } from "../db";
 import setDataToAllClients from "./setDataToAllClients";
 import { IUpdateRoom } from "../types";
 
-const updateRoom = (data: Buffer): void => {
+const updateRoom = (data: Buffer): string => {
   const createRoomData: IUpdateRoom = JSON.parse(data.toString());
 
   const roomData = JSON.stringify([
@@ -23,7 +23,7 @@ const updateRoom = (data: Buffer): void => {
     id: 0,
   };
 
-  setDataToAllClients(JSON.stringify(responseCreateRoomData));
+  return JSON.stringify(responseCreateRoomData);
 };
 
 export default updateRoom;
