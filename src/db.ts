@@ -1,5 +1,5 @@
+import { WebSocket } from "ws";
 import { IRequestLoginData } from "./types";
 
-const db: IRequestLoginData[] = [];
-
-export default db;
+export const clients: WebSocket[] = [];
+export const users: IRequestLoginData[] = [];

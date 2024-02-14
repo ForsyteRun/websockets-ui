@@ -1,6 +1,7 @@
-import { httpServer } from "./http_server/index";
+import * as dotenv from "dotenv";
 import { WebSocketServer } from "ws";
-import db from "./db";
+import { clients, users } from "./db";
+import { httpServer } from "./http_server/index";
 import {
   IRequestLogin,
   IRequestLoginData,
@@ -8,8 +9,8 @@ import {
   IResponseLoginData,
   IResponseUpdateRoom,
 } from "./types";
-import * as dotenv from "dotenv";
 import updateRoom from "./updateRoom";
+import setDataToAllClients from "./setDataToAllClients";
 
 dotenv.config();
 
@@ -20,9 +21,10 @@ const wss = new WebSocketServer({ port: 3000 });
 wss.on("connection", function connection(ws) {
   ws.on("error", console.error);
 
+  clients.push(ws);
+
   ws.on("message", function message(data: Buffer) {
     const type = JSON.parse(data.toString()).type;
-    console.log(db);
 
     try {
       switch (type) {
@@ -32,7 +34,7 @@ wss.on("connection", function connection(ws) {
             parseData.data.toString()
           );
 
-          db.push(parseUserData);
+          users.push(parseUserData);
 
           const responseData: IResponseLoginData = {
             error: false,
@@ -55,7 +57,7 @@ wss.on("connection", function connection(ws) {
 
           const responseCreateRoomData = updateRoom(createRoomData);
 
-          ws.send(JSON.stringify(responseCreateRoomData));
+          setDataToAllClients(JSON.stringify(responseCreateRoomData));
 
           break;
         default:

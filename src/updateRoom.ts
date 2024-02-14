@@ -1,4 +1,4 @@
-import db from "./db";
+import { users } from "./db";
 import { IResponseUpdateRoom } from "./types";
 
 const updateRoom = (data: IResponseUpdateRoom): IResponseUpdateRoom => {
@@ -7,8 +7,8 @@ const updateRoom = (data: IResponseUpdateRoom): IResponseUpdateRoom => {
       roomId: data.id,
       roomUsers: [
         {
-          name: db[db.length - 1].name,
-          index: db.length - 1,
+          name: users[users.length - 1].name,
+          index: users.length - 1,
         },
       ],
     },
