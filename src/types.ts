@@ -22,18 +22,25 @@ export interface IRequestLoginData {
   password: string;
 }
 
-export interface IResponseUpdateRoom {
+export interface IUpdateRoom {
   type: "update_room";
   data: string;
-  id: 0;
+  id: number;
 }
 
-// export interface IResponseUpdateRoomData {
-//   roomId: number;
-//   roomUsers: string;
-// }
+export interface IAddUsersToRoom {
+  type: "add_user_to_room";
+  data: {
+    indexRoom: number;
+  };
+  id: number;
+}
 
-// export interface IResponseUpdateRoomUsers {
-//   name: string;
-//   index: number;
-// }
+export interface ICreateGame {
+  type: "create_game";
+  data: {
+    idGame: number;
+    idPlayer: number;
+  };
+  id: number;
+}

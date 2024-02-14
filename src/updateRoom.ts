@@ -1,7 +1,7 @@
 import { users } from "./db";
-import { IResponseUpdateRoom } from "./types";
+import { IUpdateRoom } from "./types";
 
-const updateRoom = (data: IResponseUpdateRoom): IResponseUpdateRoom => {
+const updateRoom = (data: IUpdateRoom): IUpdateRoom => {
   const roomData = JSON.stringify([
     {
       roomId: data.id,
@@ -14,7 +14,7 @@ const updateRoom = (data: IResponseUpdateRoom): IResponseUpdateRoom => {
     },
   ]);
 
-  const responseCreateRoomData: IResponseUpdateRoom = {
+  const responseCreateRoomData: IUpdateRoom = {
     type: "update_room",
     data: roomData,
     id: 0,

@@ -7,7 +7,7 @@ import {
   IRequestLoginData,
   IResponseLogin,
   IResponseLoginData,
-  IResponseUpdateRoom,
+  IUpdateRoom,
 } from "./types";
 import updateRoom from "./updateRoom";
 import setDataToAllClients from "./setDataToAllClients";
@@ -51,9 +51,7 @@ wss.on("connection", function connection(ws) {
           ws.send(JSON.stringify(user));
           break;
         case "create_room":
-          const createRoomData: IResponseUpdateRoom = JSON.parse(
-            data.toString()
-          );
+          const createRoomData: IUpdateRoom = JSON.parse(data.toString());
 
           const responseCreateRoomData = updateRoom(createRoomData);
 
