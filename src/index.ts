@@ -10,6 +10,7 @@ import {
   IResponseLoginData,
 } from "./types";
 import updateRoom from "./utils/updateRoom";
+import loginUser from "./utils/loginUser";
 
 dotenv.config();
 
@@ -28,26 +29,9 @@ wss.on("connection", function connection(ws) {
     try {
       switch (type) {
         case "reg":
-          const parseData: IRequestLogin = JSON.parse(data.toString());
-          const parseUserData: IRequestLoginData = JSON.parse(
-            parseData.data.toString()
-          );
+          const user = loginUser(data);
 
-          users.push(parseUserData);
-
-          const responseData: IResponseLoginData = {
-            error: false,
-            errorText: "",
-            index: 0,
-            name: parseUserData.name,
-          };
-
-          const user: IResponseLogin = {
-            ...parseData,
-            data: JSON.stringify(responseData),
-          };
-
-          ws.send(JSON.stringify(user));
+          ws.send(user);
           break;
         case "create_room":
           updateRoom(data);
