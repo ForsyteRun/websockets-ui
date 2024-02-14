@@ -9,6 +9,7 @@ import {
   IResponseUpdateRoom,
 } from "./types";
 import * as dotenv from "dotenv";
+import updateRoom from "./updateRoom";
 
 dotenv.config();
 
@@ -21,6 +22,7 @@ wss.on("connection", function connection(ws) {
 
   ws.on("message", function message(data: Buffer) {
     const type = JSON.parse(data.toString()).type;
+    console.log(db);
 
     try {
       switch (type) {
@@ -51,23 +53,7 @@ wss.on("connection", function connection(ws) {
             data.toString()
           );
 
-          const roomData = JSON.stringify([
-            {
-              roomId: createRoomData.id,
-              roomUsers: [
-                {
-                  name: db[db.length - 1].name,
-                  index: db.length - 1,
-                },
-              ],
-            },
-          ]);
-
-          const responseCreateRoomData: IResponseUpdateRoom = {
-            type: "update_room",
-            data: roomData,
-            id: 0,
-          };
+          const responseCreateRoomData = updateRoom(createRoomData);
 
           ws.send(JSON.stringify(responseCreateRoomData));
 
