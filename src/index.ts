@@ -51,12 +51,10 @@ wss.on("connection", function connection(ws) {
           ws.send(JSON.stringify(user));
           break;
         case "create_room":
-          const createRoomData: IUpdateRoom = JSON.parse(data.toString());
+          updateRoom(data);
 
-          const responseCreateRoomData = updateRoom(createRoomData);
-
-          setDataToAllClients(JSON.stringify(responseCreateRoomData));
-
+          break;
+        case "add_user_to_room":
           break;
         default:
           break;
