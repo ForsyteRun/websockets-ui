@@ -6,6 +6,7 @@ import {
   IRequestLoginData,
   IResponseLogin,
   IResponseLoginData,
+  IResponseUpdateRoom,
 } from "./types";
 import * as dotenv from "dotenv";
 
@@ -19,27 +20,61 @@ wss.on("connection", function connection(ws) {
   ws.on("error", console.error);
 
   ws.on("message", function message(data: Buffer) {
+    const type = JSON.parse(data.toString()).type;
+
     try {
-      const parseData: IRequestLogin = JSON.parse(data.toString());
-      const parseUserData: IRequestLoginData = JSON.parse(
-        parseData.data.toString()
-      );
+      switch (type) {
+        case "reg":
+          const parseData: IRequestLogin = JSON.parse(data.toString());
+          const parseUserData: IRequestLoginData = JSON.parse(
+            parseData.data.toString()
+          );
 
-      db.push(parseUserData);
+          db.push(parseUserData);
 
-      const responseData: IResponseLoginData = {
-        error: false,
-        errorText: "",
-        index: 0,
-        name: parseUserData.name,
-      };
+          const responseData: IResponseLoginData = {
+            error: false,
+            errorText: "",
+            index: 0,
+            name: parseUserData.name,
+          };
 
-      const user: IResponseLogin = {
-        ...parseData,
-        data: JSON.stringify(responseData),
-      };
+          const user: IResponseLogin = {
+            ...parseData,
+            data: JSON.stringify(responseData),
+          };
 
-      ws.send(JSON.stringify(user));
+          ws.send(JSON.stringify(user));
+          break;
+        case "create_room":
+          const createRoomData: IResponseUpdateRoom = JSON.parse(
+            data.toString()
+          );
+
+          const roomData = JSON.stringify([
+            {
+              roomId: createRoomData.id,
+              roomUsers: [
+                {
+                  name: db[db.length - 1].name,
+                  index: db.length - 1,
+                },
+              ],
+            },
+          ]);
+
+          const responseCreateRoomData: IResponseUpdateRoom = {
+            type: "update_room",
+            data: roomData,
+            id: 0,
+          };
+
+          ws.send(JSON.stringify(responseCreateRoomData));
+
+          break;
+        default:
+          break;
+      }
     } catch {
       const error = new Error();
       error.message = "error during request";

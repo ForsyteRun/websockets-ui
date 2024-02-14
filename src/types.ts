@@ -21,3 +21,19 @@ export interface IRequestLoginData {
   name: string;
   password: string;
 }
+
+export interface IResponseUpdateRoom {
+  type: "update_room";
+  data: string;
+  id: 0;
+}
+
+// export interface IResponseUpdateRoomData {
+//   roomId: number;
+//   roomUsers: string;
+// }
+
+// export interface IResponseUpdateRoomUsers {
+//   name: string;
+//   index: number;
+// }
