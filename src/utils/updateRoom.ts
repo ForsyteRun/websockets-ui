@@ -1,6 +1,6 @@
-import { users } from "./db";
+import { users } from "../db";
 import setDataToAllClients from "./setDataToAllClients";
-import { IUpdateRoom } from "./types";
+import { IUpdateRoom } from "../types";
 
 const updateRoom = (data: Buffer): void => {
   const createRoomData: IUpdateRoom = JSON.parse(data.toString());

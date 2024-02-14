@@ -1,5 +1,5 @@
 import setDataToAllClients from "./setDataToAllClients";
-import { IAddUsersToRoom, ICreateGame } from "./types";
+import { IAddUsersToRoom, ICreateGame } from "../types";
 
 const createGame = (data: Buffer) => {
   const addUserToRoom: IAddUsersToRoom = JSON.parse(data.toString());

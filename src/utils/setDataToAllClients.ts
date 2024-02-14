@@ -1,4 +1,4 @@
-import { clients } from "./db";
+import { clients } from "../db";
 
 const setDataToAllClients = (message: string) => {
   clients.forEach(function each(client) {

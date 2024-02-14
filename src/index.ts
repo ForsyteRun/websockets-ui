@@ -1,6 +1,6 @@
 import * as dotenv from "dotenv";
 import { WebSocketServer } from "ws";
-import createGame from "./createGame";
+import createGame from "./utils/createGame";
 import { clients, users } from "./db";
 import { httpServer } from "./http_server/index";
 import {
@@ -9,7 +9,7 @@ import {
   IResponseLogin,
   IResponseLoginData,
 } from "./types";
-import updateRoom from "./updateRoom";
+import updateRoom from "./utils/updateRoom";
 
 dotenv.config();
 
