@@ -38,9 +38,6 @@ export interface IAddUsersToRoom {
 
 export interface ICreateGame {
   type: "create_game";
-  data: {
-    idGame: number;
-    idPlayer: number;
-  };
+  data: string;
   id: number;
 }

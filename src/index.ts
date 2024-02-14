@@ -1,5 +1,6 @@
 import * as dotenv from "dotenv";
 import { WebSocketServer } from "ws";
+import createGame from "./createGame";
 import { clients, users } from "./db";
 import { httpServer } from "./http_server/index";
 import {
@@ -7,10 +8,8 @@ import {
   IRequestLoginData,
   IResponseLogin,
   IResponseLoginData,
-  IUpdateRoom,
 } from "./types";
 import updateRoom from "./updateRoom";
-import setDataToAllClients from "./setDataToAllClients";
 
 dotenv.config();
 
@@ -52,9 +51,11 @@ wss.on("connection", function connection(ws) {
           break;
         case "create_room":
           updateRoom(data);
-
           break;
         case "add_user_to_room":
+          updateRoom(data);
+          createGame(data);
+
           break;
         default:
           break;
