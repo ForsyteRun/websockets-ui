@@ -56,8 +56,6 @@ wss.on("connection", function connection(ws) {
             id: 0,
           };
 
-          // const responseCreateRoomData = updateRoom(data);
-
           setDataToAllClients(JSON.stringify(responseData));
 
           break;

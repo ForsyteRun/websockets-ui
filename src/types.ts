@@ -46,6 +46,22 @@ export interface IAddShips {
   data: string;
   id: number;
 }
+export interface IShipsData {
+  gameId: number;
+  ships: IShipsCoor[];
+  indexPlayer: number;
+}
+
+export interface IShipsCoor {
+  position: {
+    x: number;
+    y: number;
+  };
+  direction: boolean;
+  length: number;
+  type: "small" | "medium" | "large" | "huge";
+}
+
 export interface IStartGame {
   type: "start_game";
   data: string;
