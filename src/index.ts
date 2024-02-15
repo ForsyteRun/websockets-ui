@@ -2,12 +2,14 @@ import * as dotenv from "dotenv";
 import { WebSocketServer } from "ws";
 import { clients, shipsPosition, users } from "./db";
 import { httpServer } from "./http_server/index";
-import { IAddShips, IResponseLoginData } from "./types";
+import { IAddShips, IResponseLoginData, IUpdateRoom } from "./types";
 import createGame from "./utils/createGame";
 import loginUser from "./utils/loginUser";
 import updateRoom from "./utils/updateRoom";
 import setDataToAllClients from "./utils/setDataToAllClients";
 import startGame from "./utils/startGame";
+import attack from "./utils/attack";
+import turn from "./utils/turn";
 
 dotenv.config();
 
@@ -46,11 +48,17 @@ wss.on("connection", function connection(ws) {
 
           break;
         case "add_user_to_room":
-          const responseCreateRoomData = updateRoom(data);
-
-          setDataToAllClients(responseCreateRoomData);
-
           createGame(data);
+
+          const responseData: IUpdateRoom = {
+            type: "update_room",
+            data: JSON.stringify([]),
+            id: 0,
+          };
+
+          // const responseCreateRoomData = updateRoom(data);
+
+          setDataToAllClients(JSON.stringify(responseData));
 
           break;
         case "add_ships":
@@ -62,8 +70,12 @@ wss.on("connection", function connection(ws) {
 
           if (shipsPosition.length === 2) {
             startGame();
+            turn();
           }
 
+          break;
+        case "attack":
+          attack(data);
           break;
         default:
           break;

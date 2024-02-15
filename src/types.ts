@@ -51,3 +51,28 @@ export interface IStartGame {
   data: string;
   id: number;
 }
+export interface IAttack {
+  type: "attack";
+  data: string;
+  id: number;
+}
+
+export interface IAttackRequestData {
+  gameId: number;
+  x: number;
+  y: number;
+  indexPlayer: number;
+}
+export interface IAttackResponseData {
+  position: {
+    x: number;
+    y: number;
+  };
+  currentPlayer: number /* id of the player in the current game */;
+  status: "miss" | "killed" | "shot";
+}
+export interface ITurn {
+  type: "turn";
+  data: string;
+  id: 0;
+}
