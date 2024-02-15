@@ -1,4 +1,4 @@
-import { shipsPosition } from "../db";
+import { USER_TURN, setUserTurn, shipsPosition } from "../db";
 import {
   IAttack,
   IAttackRequestData,
@@ -15,17 +15,19 @@ const attack = (data: Buffer) => {
     attackRequest.data.toString()
   );
 
-  const userIndex = attackRequestData.indexPlayer === 1 ? 0 : 1;
+  if (USER_TURN !== attackRequestData.indexPlayer) return;
 
-  const shipsCoorDB: IShipsData = JSON.parse(shipsPosition[userIndex].data);
+  const opositeUserIndex = attackRequestData.indexPlayer === 1 ? 0 : 1;
+
+  const shipsCoorDB: IShipsData = JSON.parse(
+    shipsPosition[opositeUserIndex].data
+  );
 
   const coors = getAllCoors(shipsCoorDB.ships);
 
   const isDamage = coors.some(
     (coor) => +coor.x === attackRequestData.x && +coor.y === attackRequestData.y
   );
-
-  console.log(isDamage);
 
   const attackResponseData: IAttackResponseData = {
     position: {
@@ -43,7 +45,14 @@ const attack = (data: Buffer) => {
   };
 
   setDataToAllClients(JSON.stringify(attackResponse));
-  turn(attackRequestData.indexPlayer);
+
+  if (isDamage) {
+    turn(attackRequestData.indexPlayer);
+    setUserTurn(attackRequestData.indexPlayer);
+  } else {
+    turn(opositeUserIndex);
+    setUserTurn(opositeUserIndex);
+  }
 };
 
 export default attack;
