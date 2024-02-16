@@ -62,6 +62,14 @@ export interface IShipsCoor {
   type: "small" | "medium" | "large" | "huge";
 }
 
+export interface IModifyCoor extends Omit<IShipsCoor, "position"> {
+  position: { x: number; y: number }[];
+}
+export interface IExectUserShipsPosition {
+  data: IModifyCoor[];
+  id: number;
+}
+
 export interface IStartGame {
   type: "start_game";
   data: string;

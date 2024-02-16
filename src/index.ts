@@ -1,15 +1,22 @@
 import * as dotenv from "dotenv";
 import { WebSocketServer } from "ws";
-import { clients, shipsPosition, users } from "./db";
+import { clients, fullShipsCoors, shipsPosition, users } from "./db";
 import { httpServer } from "./http_server/index";
-import { IAddShips, IResponseLoginData, IUpdateRoom } from "./types";
+import {
+  IAddShips,
+  IExectUserShipsPosition,
+  IResponseLoginData,
+  IShipsData,
+  IUpdateRoom,
+} from "./types";
 import createGame from "./utils/createGame";
+import getAllCoors from "./utils/getAllCoors";
 import loginUser from "./utils/loginUser";
-import updateRoom from "./utils/updateRoom";
 import setDataToAllClients from "./utils/setDataToAllClients";
 import startGame from "./utils/startGame";
-import attack from "./utils/attack";
 import turn from "./utils/turn";
+import updateRoom from "./utils/updateRoom";
+import attack from "./utils/attack";
 
 dotenv.config();
 
@@ -31,10 +38,6 @@ wss.on("connection", function connection(ws) {
           const user = loginUser(data);
 
           ws.send(user);
-
-          // const responseLogin = updateRoom(data);
-
-          // ws.send(responseLogin);
 
           break;
         case "create_room":
@@ -65,6 +68,17 @@ wss.on("connection", function connection(ws) {
           const singleUserShips = { ...ships, id: shipsPosition.length };
 
           shipsPosition.push(singleUserShips);
+
+          const shipsCoorDB: IShipsData = JSON.parse(singleUserShips.data);
+
+          const coors = getAllCoors(shipsCoorDB.ships);
+
+          const exectUserShipsPosition: IExectUserShipsPosition = {
+            id: shipsCoorDB.indexPlayer,
+            data: coors,
+          };
+
+          fullShipsCoors.push(exectUserShipsPosition);
 
           if (shipsPosition.length === 2) {
             startGame();

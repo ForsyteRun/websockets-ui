@@ -13,8 +13,6 @@ const startGame = () => {
 
     client.send(JSON.stringify(startGameRequest));
   });
-
-  // setDataToAllClients(JSON.stringify(startGameRequest));
 };
 
 export default startGame;
