@@ -7,6 +7,7 @@ import {
   IModifyCoor,
 } from "../types";
 import getAttackStatus from "./getAttackStatus";
+import getFullUserShipsCoors from "./getFullUserShipsCoors";
 import getUserDataById from "./getUserById";
 import setDataToAllClients from "./setDataToAllClients";
 import turn from "./turn";
@@ -20,19 +21,12 @@ const attack = (data: Buffer) => {
   if (USER_TURN !== attackRequestData.indexPlayer) return;
   const opositeUserIndex = attackRequestData.indexPlayer === 1 ? 0 : 1;
 
-  const modifiedDataArr = getUserDataById(opositeUserIndex)
-    ?.data.map((ship) => {
-      const modifiedPositions = ship.position.filter((pos) => {
-        return +pos.x !== attackRequestData.x || +pos.y !== attackRequestData.y;
-      });
-      return modifiedPositions.length > 0
-        ? {
-            ...ship,
-            position: modifiedPositions,
-          }
-        : null;
-    })
-    .filter((el) => el !== null) as IModifyCoor[];
+  const userData = getUserDataById(opositeUserIndex);
+
+  const fullUserShipsCoors = getFullUserShipsCoors(
+    userData.data,
+    attackRequestData
+  );
 
   const dataArr = getUserDataById(opositeUserIndex)
     ?.data.map((ship) => {
@@ -46,7 +40,7 @@ const attack = (data: Buffer) => {
 
   const modifiedDataWithId = {
     id: opositeUserIndex,
-    data: modifiedDataArr,
+    data: fullUserShipsCoors,
   } as IExectUserShipsPosition;
 
   updateCoors(modifiedDataWithId, opositeUserIndex);
