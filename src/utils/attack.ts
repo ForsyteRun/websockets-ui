@@ -1,19 +1,12 @@
-import { USER_TURN, setUserTurn, updateCoors } from "../db";
+import { USER_TURN, updateCoors } from "../db";
+import { IAttack, IAttackRequestData, IExectUserShipsPosition } from "../types";
 import {
-  IAttack,
-  IAttackRequestData,
-  IAttackResponseData,
-  IExectUserShipsPosition,
-} from "../types";
-import {
+  attackResponse,
   getAttackStatus,
   getDamageCoor,
   getFullUserShipsCoors,
-  setDataToAllClients,
   getUserById,
 } from "./index";
-
-import turn from "./turn";
 
 const attack = (data: Buffer) => {
   const attackRequest: IAttack = JSON.parse(data.toString());
@@ -43,30 +36,7 @@ const attack = (data: Buffer) => {
 
   const atackStatus = getAttackStatus(damageCoor);
 
-  const attackResponseData: IAttackResponseData = {
-    position: {
-      x: attackRequestData.x,
-      y: attackRequestData.y,
-    },
-    currentPlayer: attackRequestData.indexPlayer,
-    status: atackStatus,
-  };
-
-  const attackResponse: IAttack = {
-    type: "attack",
-    data: JSON.stringify(attackResponseData),
-    id: 0,
-  };
-
-  setDataToAllClients(JSON.stringify(attackResponse));
-
-  if (atackStatus !== "miss") {
-    turn(attackRequestData.indexPlayer);
-    setUserTurn(attackRequestData.indexPlayer);
-  } else {
-    turn(opositeUserIndex);
-    setUserTurn(opositeUserIndex);
-  }
+  attackResponse(atackStatus, attackRequestData, opositeUserIndex);
 };
 
 export default attack;

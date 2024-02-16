@@ -10,3 +10,4 @@ export { default as setDataToAllClients } from "./setDataToAllClients";
 export { default as startGame } from "./startGame";
 export { default as turn } from "./turn";
 export { default as updateRoom } from "./updateRoom";
+export { default as attackResponse } from "./attackResponse";
