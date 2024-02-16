@@ -1,8 +1,4 @@
-import {
-  IAttackRequestData,
-  IExectUserShipsPosition,
-  IModifyCoor,
-} from "../types";
+import { IAttackRequestData, IModifyCoor } from "../types";
 
 const getFullUserShipsCoors = (
   data: IModifyCoor[],

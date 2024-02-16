@@ -1,5 +1,4 @@
 import { users } from "../db";
-import setDataToAllClients from "./setDataToAllClients";
 import { IUpdateRoom } from "../types";
 
 const updateRoom = (data: Buffer): string => {

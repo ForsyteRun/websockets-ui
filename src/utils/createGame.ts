@@ -1,7 +1,6 @@
-import setDataToAllClients from "./setDataToAllClients";
-import { IAddUsersToRoom, ICreateGame } from "../types";
-import { clients } from "../db";
 import { WebSocket } from "ws";
+import { clients } from "../db";
+import { IAddUsersToRoom, ICreateGame } from "../types";
 
 const createGame = (data: Buffer) => {
   const addUserToRoom: IAddUsersToRoom = JSON.parse(data.toString());

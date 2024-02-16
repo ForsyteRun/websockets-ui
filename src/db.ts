@@ -1,10 +1,5 @@
 import { WebSocket } from "ws";
-import {
-  IAddShips,
-  IExectUserShipsPosition,
-  IModifyCoor,
-  IRequestLoginData,
-} from "./types";
+import { IAddShips, IExectUserShipsPosition, IRequestLoginData } from "./types";
 
 export const clients: WebSocket[] = [];
 export const users: IRequestLoginData[] = [];

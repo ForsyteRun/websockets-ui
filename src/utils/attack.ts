@@ -4,13 +4,15 @@ import {
   IAttackRequestData,
   IAttackResponseData,
   IExectUserShipsPosition,
-  IModifyCoor,
 } from "../types";
-import getAttackStatus from "./getAttackStatus";
-import getDamageCoor from "./getDamageCoor";
-import getFullUserShipsCoors from "./getFullUserShipsCoors";
-import getUserDataById from "./getUserById";
-import setDataToAllClients from "./setDataToAllClients";
+import {
+  getAttackStatus,
+  getDamageCoor,
+  getFullUserShipsCoors,
+  setDataToAllClients,
+  getUserById,
+} from "./index";
+
 import turn from "./turn";
 
 const attack = (data: Buffer) => {
@@ -20,9 +22,10 @@ const attack = (data: Buffer) => {
   );
 
   if (USER_TURN !== attackRequestData.indexPlayer) return;
+
   const opositeUserIndex = attackRequestData.indexPlayer === 1 ? 0 : 1;
 
-  const userData = getUserDataById(opositeUserIndex);
+  const userData = getUserById(opositeUserIndex);
 
   const fullUserShipsCoors = getFullUserShipsCoors(
     userData.data,

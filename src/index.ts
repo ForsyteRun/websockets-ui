@@ -9,14 +9,16 @@ import {
   IShipsData,
   IUpdateRoom,
 } from "./types";
-import createGame from "./utils/createGame";
-import getAllCoors from "./utils/getAllCoors";
-import loginUser from "./utils/loginUser";
-import setDataToAllClients from "./utils/setDataToAllClients";
-import startGame from "./utils/startGame";
-import turn from "./utils/turn";
-import updateRoom from "./utils/updateRoom";
-import attack from "./utils/attack";
+import {
+  createGame,
+  getAllCoors,
+  loginUser,
+  setDataToAllClients,
+  startGame,
+  turn,
+  attack,
+  updateRoom,
+} from "./utils";
 
 dotenv.config();
 
