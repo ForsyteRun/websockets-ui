@@ -1,4 +1,4 @@
-import { USER_TURN, fullShipsCoors, setUserTurn, updateCoors } from "../db";
+import { USER_TURN, setUserTurn, updateCoors } from "../db";
 import {
   IAttack,
   IAttackRequestData,
@@ -6,13 +6,10 @@ import {
   IExectUserShipsPosition,
   IModifyCoor,
 } from "../types";
+import getAttackStatus from "./getAttackStatus";
 import getUserDataById from "./getUserById";
 import setDataToAllClients from "./setDataToAllClients";
 import turn from "./turn";
-
-const statusDamage: Pick<IAttackResponseData, "status"> = {
-  status: "miss",
-};
 
 const attack = (data: Buffer) => {
   const attackRequest: IAttack = JSON.parse(data.toString());
@@ -54,13 +51,7 @@ const attack = (data: Buffer) => {
 
   updateCoors(modifiedDataWithId, opositeUserIndex);
 
-  if (!dataArr) {
-    statusDamage.status = "miss";
-  } else if (dataArr.length > 1) {
-    statusDamage.status = "shot";
-  } else if (dataArr.length === 1) {
-    statusDamage.status = "killed";
-  }
+  const atackStatus = getAttackStatus(dataArr);
 
   const attackResponseData: IAttackResponseData = {
     position: {
@@ -68,7 +59,7 @@ const attack = (data: Buffer) => {
       y: attackRequestData.y,
     },
     currentPlayer: attackRequestData.indexPlayer,
-    status: statusDamage.status,
+    status: atackStatus,
   };
 
   const attackResponse: IAttack = {
@@ -79,7 +70,7 @@ const attack = (data: Buffer) => {
 
   setDataToAllClients(JSON.stringify(attackResponse));
 
-  if (statusDamage.status !== "miss") {
+  if (atackStatus !== "miss") {
     turn(attackRequestData.indexPlayer);
     setUserTurn(attackRequestData.indexPlayer);
   } else {
