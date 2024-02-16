@@ -7,6 +7,7 @@ import {
   IModifyCoor,
 } from "../types";
 import getAttackStatus from "./getAttackStatus";
+import getDamageCoor from "./getDamageCoor";
 import getFullUserShipsCoors from "./getFullUserShipsCoors";
 import getUserDataById from "./getUserById";
 import setDataToAllClients from "./setDataToAllClients";
@@ -28,15 +29,7 @@ const attack = (data: Buffer) => {
     attackRequestData
   );
 
-  const dataArr = getUserDataById(opositeUserIndex)
-    ?.data.map((ship) => {
-      return ship.position.filter((pos) => {
-        return +pos.x === attackRequestData.x && +pos.y === attackRequestData.y;
-      }).length > 0
-        ? ship.position
-        : null;
-    })
-    .find((el) => el !== null) as { x: number; y: number }[];
+  const damageCoor = getDamageCoor(userData.data, attackRequestData);
 
   const modifiedDataWithId = {
     id: opositeUserIndex,
@@ -45,7 +38,7 @@ const attack = (data: Buffer) => {
 
   updateCoors(modifiedDataWithId, opositeUserIndex);
 
-  const atackStatus = getAttackStatus(dataArr);
+  const atackStatus = getAttackStatus(damageCoor);
 
   const attackResponseData: IAttackResponseData = {
     position: {
