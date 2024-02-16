@@ -63,7 +63,7 @@ wss.on("connection", function connection(ws) {
 
           break;
         case "add_ships":
-          let ships: IAddShips = JSON.parse(data.toString());
+          const ships: IAddShips = JSON.parse(data.toString());
 
           const singleUserShips = { ...ships, id: shipsPosition.length };
 

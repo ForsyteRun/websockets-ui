@@ -19,10 +19,6 @@ export function setUserTurn(value: number) {
 }
 
 export function updateCoors(value: IExectUserShipsPosition, id: number) {
-  // const userData = fullShipsCoors.filter((el) => el.id !== id);
-  // userData.push(...value);
-  // fullShipsCoors = userData;
-
   fullShipsCoors = fullShipsCoors
     .map((userData) => {
       if (userData.id === id) {
@@ -31,6 +27,4 @@ export function updateCoors(value: IExectUserShipsPosition, id: number) {
       return userData;
     })
     .flat();
-
-  console.log("lkj");
 }

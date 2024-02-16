@@ -1,7 +1,6 @@
 import { WebSocket } from "ws";
 import { clients, shipsPosition } from "../db";
 import { IStartGame } from "../types";
-import setDataToAllClients from "./setDataToAllClients";
 
 const startGame = () => {
   clients.forEach((client: WebSocket, index) => {
