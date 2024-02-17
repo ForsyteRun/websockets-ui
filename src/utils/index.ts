@@ -11,3 +11,5 @@ export { default as startGame } from "./startGame";
 export { default as turn } from "./turn";
 export { default as updateRoom } from "./updateRoom";
 export { default as attackResponse } from "./attackResponse";
+export { default as setShotNearBy } from "./setShotNearBy";
+export { default as getUserByIdNotModify } from "./getUserByIdNotModify";

@@ -1,6 +1,12 @@
 import * as dotenv from "dotenv";
 import { WebSocketServer } from "ws";
-import { clients, fullShipsCoors, shipsPosition, users } from "./db";
+import {
+  clients,
+  fullShipsCoors,
+  notModifyFullShipsCoors,
+  shipsPosition,
+  users,
+} from "./db";
 import { httpServer } from "./http_server/index";
 import {
   IAddShips,
@@ -81,6 +87,7 @@ wss.on("connection", function connection(ws) {
           };
 
           fullShipsCoors.push(exectUserShipsPosition);
+          notModifyFullShipsCoors.push(exectUserShipsPosition);
 
           if (shipsPosition.length === 2) {
             startGame();

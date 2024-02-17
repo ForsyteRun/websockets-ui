@@ -6,6 +6,8 @@ import {
   getDamageCoor,
   getFullUserShipsCoors,
   getUserById,
+  getUserByIdNotModify,
+  setShotNearBy,
 } from "./index";
 
 const attack = (data: Buffer) => {
@@ -19,6 +21,7 @@ const attack = (data: Buffer) => {
   const opositeUserIndex = attackRequestData.indexPlayer === 1 ? 0 : 1;
 
   const userData = getUserById(opositeUserIndex);
+  const userDataNotModify = getUserByIdNotModify(opositeUserIndex);
 
   const fullUserShipsCoors = getFullUserShipsCoors(
     userData.data,
@@ -35,6 +38,13 @@ const attack = (data: Buffer) => {
   updateCoors(modifiedDataWithId, opositeUserIndex);
 
   const atackStatus = getAttackStatus(damageCoor);
+
+  setShotNearBy(
+    userDataNotModify.data,
+    attackRequestData,
+    atackStatus,
+    attackRequestData.indexPlayer
+  );
 
   attackResponse(atackStatus, attackRequestData, opositeUserIndex);
 };

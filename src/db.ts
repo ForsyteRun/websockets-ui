@@ -6,6 +6,7 @@ export const users: IRequestLoginData[] = [];
 export const shipsPosition: IAddShips[] = [];
 
 export let fullShipsCoors: IExectUserShipsPosition[] = [];
+export const notModifyFullShipsCoors: IExectUserShipsPosition[] = [];
 
 export let USER_TURN = 1;
 
