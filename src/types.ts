@@ -100,3 +100,9 @@ export interface ITurn {
   data: string;
   id: 0;
 }
+
+export interface IFinishGame {
+  type: "finish";
+  data: string;
+  id: 0;
+}

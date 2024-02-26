@@ -24,6 +24,7 @@ import {
   turn,
   attack,
   updateRoom,
+  finishGame,
 } from "./utils";
 
 dotenv.config();

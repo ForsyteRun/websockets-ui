@@ -1,7 +1,8 @@
-import { USER_TURN, updateCoors } from "../db";
+import { USER_TURN, fullShipsCoors, updateCoors } from "../db";
 import { IAttack, IAttackRequestData, IExectUserShipsPosition } from "../types";
 import {
   attackResponse,
+  finishGame,
   getAttackStatus,
   getDamageCoor,
   getFullUserShipsCoors,
@@ -47,6 +48,7 @@ const attack = (data: Buffer) => {
   );
 
   attackResponse(atackStatus, attackRequestData, opositeUserIndex);
+  finishGame(fullShipsCoors);
 };
 
 export default attack;
