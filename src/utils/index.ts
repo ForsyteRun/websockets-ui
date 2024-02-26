@@ -1,0 +1,16 @@
+export { default as attack } from "./attack";
+export { default as createGame } from "./createGame";
+export { default as getAllCoors } from "./getAllCoors";
+export { default as getAttackStatus } from "./getAttackStatus";
+export { default as getDamageCoor } from "./getDamageCoor";
+export { default as getFullUserShipsCoors } from "./getFullUserShipsCoors";
+export { default as getUserById } from "./getUserById";
+export { default as loginUser } from "./loginUser";
+export { default as setDataToAllClients } from "./setDataToAllClients";
+export { default as startGame } from "./startGame";
+export { default as turn } from "./turn";
+export { default as updateRoom } from "./updateRoom";
+export { default as attackResponse } from "./attackResponse";
+export { default as setShotNearBy } from "./setShotNearBy";
+export { default as getUserByIdNotModify } from "./getUserByIdNotModify";
+export { default as finishGame } from "./finishGame";
